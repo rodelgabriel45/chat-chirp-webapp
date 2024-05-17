@@ -1,19 +1,31 @@
-export default function Message() {
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { extractTime } from "../../utils/extractTime";
+
+export default function Message({ message }) {
+  const { currentUser } = useSelector((state) => state.user);
+  const { selectedConversation } = useSelector((state) => state.conversation);
+  const fromMe = message.senderId === currentUser._id;
+  const chatClassName = fromMe ? "chat-end" : "chat-start";
+  const profilePic = fromMe
+    ? currentUser.profilePicture
+    : selectedConversation?.profilePicture;
+  const bubbleBgColor = fromMe ? "bg-blue-500" : "";
+  const formattedTime = extractTime(message.createdAt);
+
   return (
-    <div className="chat chat-end">
+    <div className={`chat ${chatClassName}`}>
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
-          <img
-            src="https://t3.ftcdn.net/jpg/03/64/62/36/360_F_364623623_ERzQYfO4HHHyawYkJ16tREsizLyvcaeg.jpg"
-            alt="Picture"
-          />
+          <img src={profilePic} alt="Picture" />
         </div>
       </div>
 
-      <div className="chat-bubble bg-blue-500 text-white">
-        You were the Chosen One!
+      <div className={`chat-bubble pb-2 text-white ${bubbleBgColor}`}>
+        {message.message}
       </div>
-      <div className="chat-footer opacity-50">Delivered</div>
+      <div className="chat-footer opacity-50">{formattedTime}</div>
     </div>
   );
 }

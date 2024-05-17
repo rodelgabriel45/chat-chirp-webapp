@@ -14,6 +14,15 @@ export const signup = async (req, res, next) => {
     if (username.includes(" "))
       return next(errorHandler(400, "Username cannot contain spaces."));
 
+    const user = await User.findOne({ username });
+
+    if (user) return next(errorHandler(400, "Username already exist"));
+
+    const userEmail = await User.findOne({ email });
+
+    if (userEmail)
+      return next(errorHandler(400, "Account already exist with this email"));
+
     const validEmail = validator.validate(email);
     if (!validEmail)
       return next(errorHandler(400, "Please enter a valid email address."));

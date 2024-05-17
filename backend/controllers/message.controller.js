@@ -1,6 +1,5 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
-import { errorHandler } from "../utils/error.js";
 
 export const sendMessage = async (req, res, next) => {
   try {
