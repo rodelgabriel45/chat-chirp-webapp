@@ -7,10 +7,13 @@ import {
   clearMessages,
 } from "../../redux/conversation/conversationSlice";
 import { useEffect } from "react";
+import { useSocketContext } from "../../context/SocketContext";
 
 export default function Conversation({ conversation, lastIdx }) {
   const dispatch = useDispatch();
   const { selectedConversation } = useSelector((state) => state.conversation);
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers.includes(conversation._id);
 
   const handleSelect = async () => {
     dispatch(selectConversation(conversation));
@@ -31,7 +34,7 @@ export default function Conversation({ conversation, lastIdx }) {
           selectedConversation?._id === conversation._id ? "bg-amber-500" : ""
         }`}
       >
-        <div className="avatar online">
+        <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div className="w-12 rounded-full">
             <img src={conversation.profilePicture} />
           </div>

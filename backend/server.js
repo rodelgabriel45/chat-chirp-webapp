@@ -6,8 +6,8 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 import userRoutes from "./routes/user.route.js";
+import { app, server } from "./socket/socket.js";
 
-const app = express();
 const PORT = process.env.PORT || 3000;
 
 dotenv.config();
@@ -34,7 +34,7 @@ mongoose
   .connect(process.env.MONGO)
   .then((result) => {
     console.log("Connected to MongoDB");
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server running on port ${PORT}!`);
     });
   })

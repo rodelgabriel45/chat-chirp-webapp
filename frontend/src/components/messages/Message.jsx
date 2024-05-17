@@ -13,6 +13,7 @@ export default function Message({ message }) {
     : selectedConversation?.profilePicture;
   const bubbleBgColor = fromMe ? "bg-blue-500" : "";
   const formattedTime = extractTime(message.createdAt);
+  const shakeClass = message.shouldShake ? "shake" : "";
 
   return (
     <div className={`chat ${chatClassName}`}>
@@ -22,7 +23,9 @@ export default function Message({ message }) {
         </div>
       </div>
 
-      <div className={`chat-bubble pb-2 text-white ${bubbleBgColor}`}>
+      <div
+        className={`chat-bubble pb-2 text-white ${bubbleBgColor} ${shakeClass}`}
+      >
         {message.message}
       </div>
       <div className="chat-footer opacity-50">{formattedTime}</div>
