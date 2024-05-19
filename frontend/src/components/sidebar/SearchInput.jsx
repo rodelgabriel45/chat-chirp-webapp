@@ -11,7 +11,6 @@ export default function SearchInput() {
   const { currentUser } = useSelector((state) => state.user);
   const [search, setSearch] = useState("");
   const { conversations } = useGetConversations();
-  const { selectedConversation } = useSelector((state) => state.conversation);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

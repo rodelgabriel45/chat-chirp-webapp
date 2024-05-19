@@ -10,7 +10,7 @@ export const getUsers = async (req, res, next) => {
 
     const allUsers = await User.find({ _id: { $ne: loggedInUserId } })
       .select("-password")
-      .sort({ updatedAt: -1 });
+      .sort({ createdAt: -1 });
 
     res.status(200).json(allUsers);
   } catch (error) {

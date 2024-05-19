@@ -129,7 +129,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="border-r border-gray-600 px-3 overflow-auto">
+    <div className="border-r border-gray-600 px-3 flex flex-col">
       <SearchInput />
       <div className="divider p-3"></div>
       <Conversations />
