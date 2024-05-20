@@ -33,12 +33,17 @@ export default function SearchInput() {
 
   return (
     <div className=" flex flex-col gap-4">
-      <div className="flex gap-2 items-center">
-        <img
-          src={currentUser.profilePicture}
-          alt="Profile Picture"
-          className="w-14 h-14 rounded-full object-cover"
-        />
+      <div className="flex gap-2 items-center ">
+        <div className=" avatar online">
+          <div className="w-12 rounded-full">
+            <img
+              src={currentUser.profilePicture}
+              alt="Profile Picture"
+              className="object-cover"
+            />
+          </div>
+        </div>
+
         <span className="text-white font-bold text-lg">
           {currentUser.username}
         </span>

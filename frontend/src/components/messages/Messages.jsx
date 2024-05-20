@@ -3,13 +3,11 @@ import useGetMessages from "../../hooks/useGetMessages";
 import Skeleton from "../Skeleton";
 import { useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
-import useListenMessages from "../../hooks/useListenMessages";
 
 export default function Messages() {
   const { loading } = useGetMessages();
   const { messages } = useSelector((state) => state.conversation);
   const lastMessageRef = useRef();
-  useListenMessages();
 
   // scroll to the latest message
   useEffect(() => {

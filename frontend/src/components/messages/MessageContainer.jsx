@@ -7,7 +7,7 @@ export default function MessageContainer() {
   const { selectedConversation } = useSelector((state) => state.conversation);
 
   return (
-    <div className="md:min-w-[450px] flex flex-col">
+    <div className="w-full flex flex-col">
       {selectedConversation ? (
         <>
           {/* Header */}

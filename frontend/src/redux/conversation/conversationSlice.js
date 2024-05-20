@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   selectedConversation: null,
   messages: null,
+  notifications: [],
 };
 
 const conversationSlice = createSlice({
@@ -24,6 +25,12 @@ const conversationSlice = createSlice({
     clearMessages(state) {
       state.messages = null;
     },
+    newNotification(state, action) {
+      state.notifications = action.payload;
+    },
+    clearNotification(state) {
+      state.notifications = null;
+    },
   },
 });
 
@@ -33,6 +40,8 @@ export const {
   setMessages,
   clearMessages,
   newMessage,
+  newNotification,
+  clearNotification,
 } = conversationSlice.actions;
 
 export default conversationSlice.reducer;

@@ -5,18 +5,34 @@ import {
   selectConversation,
   clearSelected,
   clearMessages,
+  clearNotification,
 } from "../../redux/conversation/conversationSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSocketContext } from "../../context/SocketContext";
+import useListenMessages from "../../hooks/useListenMessages";
 
 export default function Conversation({ conversation, lastIdx }) {
   const dispatch = useDispatch();
   const { selectedConversation } = useSelector((state) => state.conversation);
   const { onlineUsers } = useSocketContext();
   const isOnline = onlineUsers.includes(conversation._id);
+  const { notifications } = useSelector((state) => state.conversation);
+  const [newNotif, setNewNotif] = useState(false);
+
+  useListenMessages();
+
+  useEffect(() => {
+    if (notifications?.senderId === conversation._id) {
+      setNewNotif(true);
+    }
+  }, [notifications]);
 
   const handleSelect = async () => {
     dispatch(selectConversation(conversation));
+    if (newNotif) {
+      setNewNotif(false);
+      dispatch(clearNotification());
+    }
   };
 
   useEffect(() => {
@@ -34,7 +50,10 @@ export default function Conversation({ conversation, lastIdx }) {
           selectedConversation?._id === conversation._id ? "bg-amber-500" : ""
         }`}
       >
-        <div className={`avatar ${isOnline ? "online" : ""}`}>
+        <div className={`avatar ${isOnline ? "online" : ""} relative`}>
+          {newNotif && (
+            <div className="badge badge-primary badge-sm absolute inset-y-0"></div>
+          )}
           <div className="w-12 rounded-full">
             <img src={conversation.profilePicture} />
           </div>
@@ -43,7 +62,6 @@ export default function Conversation({ conversation, lastIdx }) {
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
             <p className="font-bold text-gray-200">{conversation.username}</p>
-            <span className="text-xl">😴</span>
           </div>
         </div>
       </div>

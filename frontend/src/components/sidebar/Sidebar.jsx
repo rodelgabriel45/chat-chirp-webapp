@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import app from "../../firebase";
 import useUpdateProfile from "../../hooks/useUpdateProfile";
+import { selectConversation } from "../../redux/conversation/conversationSlice";
 
 export default function Sidebar() {
   const { currentUser } = useSelector((state) => state.user);
